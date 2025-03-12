@@ -1,0 +1,8 @@
+{
+  "@@locale": "en",
+  "appTitle": "Tech test",
+  "listOfPosts": "List of Posts",
+  "postDetails": "Post Details",
+  "errorLoadingData": "Error loading data.",
+  "postNotFound": "Post not found"
+}

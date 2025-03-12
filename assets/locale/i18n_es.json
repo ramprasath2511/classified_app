@@ -1,0 +1,8 @@
+{
+  "@@locale": "es",
+  "appTitle": "Demostración Flutter",
+  "listOfPosts": "Lista de Publicaciones",
+  "postDetails": "Detalles de la Publicación",
+  "errorLoadingData": "Error al cargar los datos.",
+  "postNotFound": "Publicación no encontrada"
+}
