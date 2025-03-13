@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:technical_flutter/services/internet_connection.dart';
-import '../../models/post_model.dart';
+import '../../model/post.dart';
 import '../../providers/post_provider.dart';
 import '../../utils/custom_extension.dart';
 import '../../views/widgets/common_appbar.dart';

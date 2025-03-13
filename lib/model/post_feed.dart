@@ -1,12 +1,12 @@
 
 
-import 'package:technical_flutter/models/post_model.dart';
+import 'package:technical_flutter/model/post.dart';
 
-import 'comment_model.dart';
+import 'comments.dart';
 
 class PostFeed {
   final Post post;
-  final List<Comment> comments;
+  final List<Comments> comments;
 
   PostFeed({
     required this.post,
@@ -17,7 +17,7 @@ class PostFeed {
     return PostFeed(
       post: Post.fromJson(json['post']),
       comments: (json['comments'] as List)
-          .map((comment) => Comment.fromJson(comment))
+          .map((comment) => Comments.fromJson(comment))
           .toList(),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:technical_flutter/main.dart';
 import 'package:technical_flutter/utils/custom_extension.dart';
-import '../../models/post_model.dart';
+import '../../model/post.dart';
 import '../../providers/post_provider.dart';
 import '../../routes/app_routes_constants.dart';
 

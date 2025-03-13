@@ -52,17 +52,18 @@ class _ListPageState extends State<ListPage> with SingleTickerProviderStateMixin
     return Row(
       children: [
         const SizedBox(width: 24),
-        customTab(context.translate("live_posts"), 0, context),
+        customTab(context.translate("live_posts"), 0, context, "tab1"),
         const SizedBox(width: 24),
-        customTab(context.translate("saved_post"), 1, context),
+        customTab(context.translate("saved_post"), 1, context, "tab2"),
         const SizedBox(width: 24),
       ],
     );
   }
 
-  Expanded customTab(String label, int index, BuildContext context) {
+  Expanded customTab(String label, int index, BuildContext context, String widgetKey) {
     return Expanded(
         child: InkWell(
+          key: Key(widgetKey),
           child: Column(
             children: [
               const SizedBox(height: 24),

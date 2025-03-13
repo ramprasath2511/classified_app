@@ -17,14 +17,14 @@ main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() {
     const MethodChannel('dev.fluttercommunity.plus/connectivity')
-        .setMethodCallHandler((MethodCall methodCall) async {
+        .setMockMethodCallHandler((MethodCall methodCall) async {
       return ['wifi'];
     });
   });
 
   tearDownAll(() {
     const MethodChannel('dev.fluttercommunity.plus/connectivity')
-        .setMethodCallHandler(null);
+        .setMockMethodCallHandler(null);
   });
   test("calling fetchPosts to return not null", () async {
     final mockClient = MockClient((request) async {

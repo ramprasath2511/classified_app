@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../models/comment_model.dart';
-import '../models/post_model.dart';
+import '../model/comments.dart';
+import '../model/post.dart';
 import 'internet_connection.dart';
 
 class PostService {
@@ -40,14 +40,14 @@ class PostService {
     }
   }
 
-  Future<List<Comment>> fetchComments({required int postId}) async {
+  Future<List<Comments>> fetchComments({required int postId}) async {
     if (await InternetConnection.checkInternetConnectivity()) {
       try {
         final response = await client.get(
             Uri.parse('$baseUrl/$postId/comments'));
         if (response.statusCode == 200) {
           final List<dynamic> data = json.decode(response.body);
-          return data.map((comment) => Comment.fromJson(comment)).toList();
+          return data.map((comment) => Comments.fromJson(comment)).toList();
         } else {
           throw Exception('Failed to load comments');
         }

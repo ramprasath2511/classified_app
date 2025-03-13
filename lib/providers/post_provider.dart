@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/Post_feed_model.dart';
-import '../models/comment_model.dart';
-import '../models/post_model.dart';
+import '../model/post_feed.dart';
+import '../model/comments.dart';
+import '../model/post.dart';
 import '../services/post_service.dart';
 
 class PostProvider with ChangeNotifier {
@@ -19,8 +19,8 @@ class PostProvider with ChangeNotifier {
   Post? get selectedPost => _selectedPost;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
-  List<Comment> _comments = [];
-  List<Comment> get comments => _comments;
+  List<Comments> _comments = [];
+  List<Comments> get comments => _comments;
   List<PostFeed> get savedPostFeed => _savedPostFeed;
 
 
@@ -63,12 +63,12 @@ class PostProvider with ChangeNotifier {
     try {
       savedPost = _savedPostFeed.firstWhere((post) => post.post.id == id);
     } catch (e) {
-      savedPost = null; // If not found, assign null instead of throwing an error
+      savedPost = null;
     }
     if (savedPost != null && savedPost.comments.isNotEmpty) {
       _comments = savedPost.comments;
     } else {
-      _comments = await _postService.fetchComments(postId: id); // Fetch from API
+      _comments = await _postService.fetchComments(postId: id);
     }
     commentLoading = false;
     notifyListeners();
@@ -76,7 +76,7 @@ class PostProvider with ChangeNotifier {
 
   Future<void> savePostForOffline(Post post) async {
     final prefs = await SharedPreferences.getInstance();
-    List<Comment> postComments = await _postService.fetchComments(postId:post.id);
+    List<Comments> postComments = await _postService.fetchComments(postId:post.id);
     PostFeed postFeed = PostFeed(post: post, comments: postComments);
     _savedPostFeed.add(postFeed);
     List<String> savedOrdersJson =
