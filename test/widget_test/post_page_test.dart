@@ -22,11 +22,9 @@ class MockPostProvider extends Mock implements PostProvider {}
 void main() {
   late MockPostProvider mockPostProvider;
   TestWidgetsFlutterBinding.ensureInitialized();
-
   setUp(() {
     mockPostProvider = MockPostProvider();
   });
-
   Widget createWidgetUnderTest() {
     return MultiProvider(
         providers: [
