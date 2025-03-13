@@ -4,5 +4,20 @@
   "listOfPosts": "List of Posts",
   "postDetails": "Post Details",
   "errorLoadingData": "Error loading data.",
-  "postNotFound": "Post not found"
+  "postNotFound": "Post not found",
+  "post_already_saved": "Post already saved",
+  "post_saved_for_offline": "Post saved for offline reading",
+  "saved": "Saved",
+  "save_for_offline": "Save for Offline",
+  "hide_comments": "Hide Comments",
+  "show_comments": "Show Comments",
+  "live_posts": "Live Posts",
+  "saved_post": "Saved Posts",
+  "no_saved_post": "No saved posts",
+  "saved_in_offline": "Saved in Offline",
+  "delete": "Delete",
+  "view_details": "View Details",
+  "settings": "Settings",
+  "theme": "Theme",
+  "language": "Language"
 }

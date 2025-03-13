@@ -1,8 +1,23 @@
 {
   "@@locale": "es",
-  "appTitle": "Demostración Flutter",
-  "listOfPosts": "Lista de Publicaciones",
-  "postDetails": "Detalles de la Publicación",
+  "appTitle": "Prueba técnica",
+  "listOfPosts": "Lista de publicaciones",
+  "postDetails": "Detalles de la publicación",
   "errorLoadingData": "Error al cargar los datos.",
-  "postNotFound": "Publicación no encontrada"
+  "postNotFound": "Publicación no encontrada",
+  "post_already_saved": "Publicación ya guardada",
+  "post_saved_for_offline": "Publicación guardada para lectura sin conexión",
+  "saved": "Guardado",
+  "save_for_offline": "Guardar para lectura sin conexión",
+  "hide_comments": "Ocultar comentarios",
+  "show_comments": "Mostrar comentarios",
+  "live_posts": "Publicaciones en vivo",
+  "saved_post": "Publicaciones guardadas",
+  "no_saved_post": "No hay publicaciones guardadas",
+  "saved_in_offline": "Guardado sin conexión",
+  "delete": "Eliminar",
+  "view_details": "Ver detalles",
+  "settings": "Configuración",
+  "theme": "Tema",
+  "language": "Idioma"
 }

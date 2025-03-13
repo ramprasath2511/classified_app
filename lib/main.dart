@@ -23,6 +23,7 @@ class Test extends StatefulWidget {
 
 class _TestState extends State<Test> {
 
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -31,8 +32,8 @@ class _TestState extends State<Test> {
         ChangeNotifierProvider(create: (_) => ThemeProvider()..loadTheme()),
         ChangeNotifierProvider(create: (_) => LocaleProvider()..loadLocale()),
       ],
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
+      child: Consumer2<ThemeProvider, LocaleProvider>(
+        builder: (context, themeProvider, localeProvider, child) {
           return MaterialApp(
             title: context.translate("appTitle"),
             theme: AppTheme.lightTheme,
@@ -41,6 +42,7 @@ class _TestState extends State<Test> {
             initialRoute: home,
             navigatorKey: navigatorKey,
             onGenerateRoute: AppRoutes.generateRoute,
+            locale: localeProvider.locale,
             supportedLocales: [const Locale('en'), const Locale('es')],
             localizationsDelegates: [
               const TranslationsDelegate(

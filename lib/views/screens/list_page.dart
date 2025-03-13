@@ -15,16 +15,12 @@ class ListPage extends StatefulWidget {
 
 class _ListPageState extends State<ListPage> with SingleTickerProviderStateMixin  {
 
-  final List<Tab> myTabs = <Tab>[
-    const Tab(text: 'Live Posts'),
-    const Tab(text: 'Saved Posts')
-  ];
   TabController? tabController;
 
   @override
   void initState() {
     super.initState();
-        Provider.of<PostProvider>(context, listen: false).fetchPosts();
+        Provider.of<PostProvider>(context, listen: false).fetchPosts(listen: false);
     tabController = TabController(length: 2, vsync: this);
   }
 
@@ -56,9 +52,9 @@ class _ListPageState extends State<ListPage> with SingleTickerProviderStateMixin
     return Row(
       children: [
         const SizedBox(width: 24),
-        customTab('Live Posts', 0, context),
+        customTab(context.translate("live_posts"), 0, context),
         const SizedBox(width: 24),
-        customTab('Saved Posts', 1, context),
+        customTab(context.translate("saved_post"), 1, context),
         const SizedBox(width: 24),
       ],
     );

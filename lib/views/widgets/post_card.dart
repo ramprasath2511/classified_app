@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:technical_flutter/main.dart';
+import 'package:technical_flutter/utils/custom_extension.dart';
 import '../../models/post_model.dart';
 import '../../providers/post_provider.dart';
 import '../../routes/app_routes_constants.dart';
@@ -13,7 +14,7 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
             onTap: () => navigateToNextScreen(),
@@ -23,7 +24,7 @@ class PostCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
+                    color: Colors.grey.withAlpha((0.3 * 255).toInt()),
                     spreadRadius: 3,
                     blurRadius: 8,
                     offset: const Offset(0, 4),
@@ -68,7 +69,7 @@ class PostCard extends StatelessWidget {
                                       size: 20,
                                       color: Colors.white,
                                     ),
-                                    Text( 'Saved in Offline', style: TextStyle(color: Colors.white), ),
+                                    Text( context.translate("saved_in_offline"), style: TextStyle(color: Colors.white), ),
                                   ],
                                 ),
                               ),
@@ -79,13 +80,13 @@ class PostCard extends StatelessWidget {
                           TextButton.icon(
                             onPressed: () async => await postProvider.removePost(post),
                             icon: const Icon(Icons.delete_outline, size: 16, color: Colors.red,),
-                            label: const Text( 'Delete', style: TextStyle(color: Colors.red),
+                            label: Text( context.translate("delete"), style: TextStyle(color: Colors.red),
                           ),
                                                       ),
                          TextButton.icon(
                            onPressed: () => navigateToNextScreen(),
                            icon: const Icon(Icons.arrow_forward_ios, size: 16),
-                           label: const Text("View Details"),
+                           label: Text(context.translate("view_details")),
                          ),
                       ],
                     ),

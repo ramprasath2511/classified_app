@@ -20,8 +20,6 @@ class AppRoutes {
       case savedPost:
         return MaterialPageRoute(builder: (_) => SavedPostsPage());
 
-
-
       default:
         return MaterialPageRoute(builder: (_) => ListPage());
     }

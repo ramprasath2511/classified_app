@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:technical_flutter/utils/custom_extension.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/locale_provider.dart';
 
 class SettingsDrawer extends StatelessWidget {
+  const SettingsDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -11,9 +14,9 @@ class SettingsDrawer extends StatelessWidget {
         children: [
           DrawerHeader(
             decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-            child: const Center(
+            child: Center(
               child: Text(
-                "Settings",
+                context.translate("settings"),
                 style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
@@ -21,7 +24,7 @@ class SettingsDrawer extends StatelessWidget {
 
           ListTile(
             leading: const Icon(Icons.brightness_6),
-            title: const Text("Theme"),
+            title:  Text(context.translate("theme")),
             trailing: Consumer<ThemeProvider>(builder: (context, themeProvider, _) {
                 return  Switch(
                   value: themeProvider.themeMode == ThemeMode.dark,
@@ -34,7 +37,7 @@ class SettingsDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.language),
-            title: const Text("Language"),
+            title:  Text(context.translate("language")),
             trailing: Consumer<LocaleProvider>(builder: (context, localeProvider, _) {
                 return DropdownButton<Locale>(
                   value: localeProvider.locale,

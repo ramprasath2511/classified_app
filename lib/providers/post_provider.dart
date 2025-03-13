@@ -24,13 +24,13 @@ class PostProvider with ChangeNotifier {
   List<PostFeed> get savedPostFeed => _savedPostFeed;
 
 
-  Future<void> fetchPosts() async {
-    isLoadingCall(true);
+  Future<void> fetchPosts({bool listen= false}) async {
+    isLoadingCall(true, listen: false);
     _errorMessage = null;
     try {
       _posts = await _postService.fetchPosts();
     } catch (e) {
-      _errorMessage = 'Failed to load posts: $e';
+      _errorMessage = 'Failed to load posts: Please check your Internet';
     } finally {
       isLoadingCall(false);
     }
@@ -42,7 +42,7 @@ class PostProvider with ChangeNotifier {
     try {
       _selectedPost = await _postService.fetchPostById(id);
     } catch (e) {
-      _errorMessage = 'Failed to load post: $e';
+      _errorMessage = 'Failed to load post: Please check your Internet';
     } finally {
       isLoadingCall(false);
     }
@@ -120,8 +120,10 @@ class PostProvider with ChangeNotifier {
     showComments = false;
   }
 
-  isLoadingCall(bool value){
+  isLoadingCall(bool value, {listen=true}){
     _isLoading = value;
-    notifyListeners();
+    if(listen) {
+      notifyListeners();
+    }
   }
 }
