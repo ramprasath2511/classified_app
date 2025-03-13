@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../models/comment_model.dart';
 import '../models/post_model.dart';
 
 class PostService {
@@ -19,11 +20,26 @@ class PostService {
 
   Future<Post> fetchPostById(int id) async {
     final response = await http.get(Uri.parse('$_baseUrl/$id'));
-     print(response.body);
     if (response.statusCode == 200) {
       return Post.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load post');
     }
   }
+
+  Future<List<Comment>> fetchComments({required int postId}) async {
+    try {
+      final response = await http.get(Uri.parse('$_baseUrl/$postId/comments'));
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        return data.map((comment) => Comment.fromJson(comment)).toList();
+      } else {
+        throw Exception('Failed to load comments');
+      }
+    } catch (e) {
+      print('Error fetching comments: $e');
+      return [];
+    }
+  }
 }
+

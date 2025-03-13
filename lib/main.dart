@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:technical_flutter/providers/locale_provider.dart';
+import 'package:technical_flutter/routes/app_routes_constants.dart';
 import 'package:technical_flutter/themes/app_theme.dart';
 import 'routes/app_routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -11,17 +12,22 @@ import 'providers/theme_provider.dart';
 import 'package:template_package/locale/translations_delegate.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Test());
+}
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+class Test extends StatefulWidget {
+  const Test({super.key});
+  @override
+  State<Test> createState() => _TestState();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class _TestState extends State<Test> {
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => PostProvider()),
+        ChangeNotifierProvider(create: (_) => PostProvider()..loadSavedPosts()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()..loadTheme()),
         ChangeNotifierProvider(create: (_) => LocaleProvider()..loadLocale()),
       ],
@@ -32,8 +38,9 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeProvider.themeMode,
-            initialRoute: '/',
-            routes: AppRoutes.routes,
+            initialRoute: home,
+            navigatorKey: navigatorKey,
+            onGenerateRoute: AppRoutes.generateRoute,
             supportedLocales: [const Locale('en'), const Locale('es')],
             localizationsDelegates: [
               const TranslationsDelegate(

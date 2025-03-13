@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../models/Post_feed_model.dart';
+import '../models/comment_model.dart';
 import '../models/post_model.dart';
 import '../services/post_service.dart';
 
@@ -9,11 +14,15 @@ class PostProvider with ChangeNotifier {
   Post? _selectedPost;
   bool _isLoading = false;
   String? _errorMessage;
-
+  List<PostFeed> _savedPostFeed = [];
   List<Post> get posts => _posts;
   Post? get selectedPost => _selectedPost;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
+  List<Comment> _comments = [];
+  List<Comment> get comments => _comments;
+  List<PostFeed> get savedPostFeed => _savedPostFeed;
+
 
   Future<void> fetchPosts() async {
     isLoadingCall(true);
@@ -32,12 +41,83 @@ class PostProvider with ChangeNotifier {
     _errorMessage = null;
     try {
       _selectedPost = await _postService.fetchPostById(id);
-
     } catch (e) {
       _errorMessage = 'Failed to load post: $e';
     } finally {
       isLoadingCall(false);
     }
+  }
+
+  bool showComments = false;
+  bool commentLoading = false;
+
+  Future<void> toggleComments(int id) async {
+    showComments = !showComments;
+    if (!showComments) {
+      notifyListeners();
+      return;
+    }
+    commentLoading = true;
+    notifyListeners();
+    PostFeed? savedPost;
+    try {
+      savedPost = _savedPostFeed.firstWhere((post) => post.post.id == id);
+    } catch (e) {
+      savedPost = null; // If not found, assign null instead of throwing an error
+    }
+    if (savedPost != null && savedPost.comments.isNotEmpty) {
+      _comments = savedPost.comments;
+    } else {
+      _comments = await _postService.fetchComments(postId: id); // Fetch from API
+    }
+    commentLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> savePostForOffline(Post post) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<Comment> postComments = await _postService.fetchComments(postId:post.id);
+    PostFeed postFeed = PostFeed(post: post, comments: postComments);
+    _savedPostFeed.add(postFeed);
+    List<String> savedOrdersJson =
+    _savedPostFeed.map((o) => json.encode(o.toJson())).toList();
+    prefs.setStringList("saved_orders", savedOrdersJson);
+    notifyListeners();
+  }
+
+  // Load saved posts for offline reading
+  Future<void> loadSavedPosts() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String>? savedOrdersJson = prefs.getStringList("saved_orders");
+
+    if (savedOrdersJson != null) {
+      _savedPostFeed = savedOrdersJson
+          .map((orderJson) => PostFeed.fromJson(json.decode(orderJson)))
+          .toList();
+    }
+    notifyListeners();
+  }
+
+  Future<void> removePost(Post post) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _savedPostFeed.removeWhere((order) => order.post.id == post.id);
+    List<String> savedOrdersJson =
+    _savedPostFeed.map((o) => json.encode(o.toJson())).toList();
+    prefs.setStringList("saved_orders", savedOrdersJson);
+    notifyListeners();
+  }
+
+  bool isPostSaved(Post post) {
+    return _savedPostFeed.any((savedPost) => savedPost.post.id == post.id);
+  }
+
+  void setSelectedPost(Post post) {
+    _selectedPost = post;
+    _errorMessage = null;
+  }
+
+  void resetProvider(){
+    showComments = false;
   }
 
   isLoadingCall(bool value){

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:technical_flutter/main.dart';
 import '../../providers/theme_provider.dart';
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -22,7 +23,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: showBackButton
           ? IconButton(
         icon: const Icon(Icons.arrow_back),
-        onPressed: () => Navigator.of(context).pop(),
+        onPressed: () => Navigator.pop(context),
       )
           : null,
       actions: [
